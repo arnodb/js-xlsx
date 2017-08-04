@@ -74,7 +74,7 @@ interface CFBContainerMin {
 interface CFBContainer extends CFBContainerMin {
 
   /* search by path or file name */
-  find(string):CFBEntry;
+  find(string:string):CFBEntry;
 
   /* list of streams and storages */
   FullPaths:string[];
@@ -95,10 +95,9 @@ interface CFB {
   parse(f:any):CFBContainer;
   utils: {
     ReadShift(size:any,t?:any):any;
-    WarnField(hexstr:string,fld?:string);
-    CheckField(hexstr:string,fld?:string);
+    WarnField(hexstr:string,fld?:string):void;
+    CheckField(hexstr:string,fld?:string):void;
     prep_blob(blob:any, pos?:number):any;
     bconcat(bufs:any[]):any;
   };
-  main;
 }

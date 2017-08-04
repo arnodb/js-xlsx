@@ -1,7 +1,7 @@
 ///<reference path='cfb.d.ts'/>
 
 interface Cell {
-  v;
+  v: string;
   w?: string;
   t?: string;
   f?: string;
@@ -28,7 +28,7 @@ interface WorksheetBase {
 }
 
 interface Worksheet extends WorksheetBase {
-  [key: string]: Cell;
+  [key: string]: Cell|CellRange|string; // Sorry, that's better than "any"
 }
 
 interface Worksheets {
@@ -42,13 +42,14 @@ interface Workbook {
 
 interface XLSX {
   parse_xlscfb(cfb:CFBContainer): Workbook;
-  read;
+  read(data: any, opts: {[opt: string]: any}): Workbook;
   readFile(filename: string): Workbook; 
+  write(wb: Workbook, opts: {[opt: string]: any}): string;
   utils: {
     encode_col(col: number): string;
     encode_row(row: number): string;
     encode_cell(cell: CellAddress): string;
-    encode_range;
+    encode_range(cs: CellAddress, ce: CellAddress): string;
     decode_col(col: string): number;
     decode_row(row: string): number;
     split_cell(cell: string): string[];
@@ -61,5 +62,4 @@ interface XLSX {
   };
   verbose: Number;
   CFB:CFB;
-  main;
 }
